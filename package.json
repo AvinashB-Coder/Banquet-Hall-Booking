@@ -1,0 +1,44 @@
+{
+  "name": "banquet-hall-booking",
+  "version": "1.0.0",
+  "description": "Banquet hall booking involves the process of reserving a venue space for various events such as weddings, corporate gatherings, birthday parties, and other special occasions. This process typically begins with a client's inquiry about the availability of the banquet hall for their desired date and event type",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AvinashB-Coder/Banquet-Hall-Booking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AvinashB-Coder/Banquet-Hall-Booking/issues"
+  },
+  "homepage": "https://github.com/AvinashB-Coder/Banquet-Hall-Booking#readme",
+  "dependencies": {
+    "@prisma/client": "^7.6.0",
+    "bcrypt": "^6.0.0",
+    "jsonwebtoken": "^9.0.3",
+    "next": "^16.2.2",
+    "prisma": "^7.6.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.5.2",
+    "@types/react": "^19.2.14",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2"
+  }
+}

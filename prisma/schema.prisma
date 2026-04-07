@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// more information: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(STAFF)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  bookings  Booking[]
+  
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  STAFF
+}
+
+model Customer {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String   @unique
+  phone       String
+  company     String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  bookings    Booking[]
+  
+  @@map("customers")
+}
+
+model Hall {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  capacity    Int
+  size        Float?   // in square feet
+  pricePerDay Float
+  amenities   String?  // JSON string of amenities
+  image       String?  // URL to image
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  bookings    Booking[]
+  packages    Package[]
+  
+  @@map("halls")
+}
+
+model Package {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  features    String?  // JSON string of features
+  hallId      String
+  hall        Hall     @relation(fields: [hallId], references: [id], onDelete: Cascade)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  bookings    Booking[]
+  
+  @@map("packages")
+}
+
+model Booking {
+  id                String   @id @default(cuid())
+  customerId        String
+  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  hallId            String
+  hall              Hall     @relation(fields: [hallId], references: [id])
+  packageId         String?
+  package           Package? @relation(fields: [packageId], references: [id])
+  eventDate         DateTime
+  endDate           DateTime
+  eventType         EventType
+  guestCount        Int
+  status            BookingStatus @default(INQUIRY)
+  totalPrice        Float
+  advancePaid       Float    @default(0)
+  notes             String?
+  requirements      String?  // JSON string of requirements
+  assignedTo        String?
+  assignedUser      User?    @relation(fields: [assignedTo], references: [id])
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("bookings")
+}
+
+enum EventType {
+  WEDDING
+  CORPORATE
+  BIRTHDAY
+  ANNIVERSARY
+  CONFERENCE
+  SEMINAR
+  PARTY
+  OTHER
+}
+
+enum BookingStatus {
+  INQUIRY
+  PROPOSAL_SENT
+  NEGOTIATION
+  CONFIRMED
+  PLANNING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
